@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Footprint Classification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .upload-container {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 450px;
+            padding: 30px;
+            text-align: center;
+        }
+        .upload-header {
+            color: #333333;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .drag-drop {
+            border: 2px dashed #007bff;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #f8f9fc;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .drag-drop p {
+            margin: 0;
+            color: #666666;
+        }
+        .browse-btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .browse-btn:hover {
+            background-color: #0056b3;
+        }
+        .file-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fc;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+        }
+        .file-item span {
+            display: inline-block;
+            font-size: 14px;
+            color: #333;
+        }
+        .file-item i {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <h1 class="upload-header">Animal Footprint Classification</h1>
+        <div class="drag-drop" id="drag-drop-area">
+            <p>Drag and Drop file</p>
+            <span>or</span>
+            <a class="browse-btn" href="#">Browse</a>
+        </div>
+        <form action="/predict" method="POST" enctype="multipart/form-data" id="upload-form">
+            <input type="file" name="file" accept="image/*" required style="display: none;" id="file-input">
+            <div class="file-list" id="file-list"></div>
+            <button type="submit" class="browse-btn">Upload Image</button>
+        </form>
+    </div>
+
+    <script>
+        const dragDropArea = document.getElementById('drag-drop-area');
+        const fileInput = document.getElementById('file-input');
+        const fileList = document.getElementById('file-list');
+
+        dragDropArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (file) {
+                const listItem = document.createElement('div');
+                listItem.className = 'file-item';
+                listItem.innerHTML = `<span>${file.name}</span><i>✔</i>`;
+                fileList.appendChild(listItem);
+            }
+        });
+    </script>
+</body>
+</html>
